@@ -28,7 +28,7 @@ def lambda_handler(event, context):
         cluster_name = cluster['DBClusterIdentifier']
         
         # Check if the tag already exists on the cluster
-        if check_tag_exists(cluster_arn, 'cluster', cluster_name, rds_client):
+        if check_tag_exists(cluster_arn, 'aurora_cluster', cluster_name, rds_client):
             logger.info(f"Tag already exists on cluster {cluster_name} at {datetime.utcnow()}")
         else:
             # Add tag to the cluster
@@ -36,7 +36,7 @@ def lambda_handler(event, context):
                 ResourceName=cluster_arn,
                 Tags=[
                     {
-                        'Key': 'cluster',
+                        'Key': 'aurora_cluster',
                         'Value': cluster_name
                     }
                 ]
@@ -56,7 +56,7 @@ def lambda_handler(event, context):
             instance_arn = instance['DBInstanceArn']
             
             # Check if the tag already exists on the instance
-            if check_tag_exists(instance_arn, 'cluster', cluster_name, rds_client):
+            if check_tag_exists(instance_arn, 'aurora_cluster', cluster_name, rds_client):
                 logger.info(f"Tag already exists on instance {instance['DBInstanceIdentifier']} of cluster {cluster_name} at {datetime.utcnow()}")
             else:
                 # Add tag to the instance
@@ -64,7 +64,7 @@ def lambda_handler(event, context):
                     ResourceName=instance_arn,
                     Tags=[
                         {
-                            'Key': 'cluster',
+                            'Key': 'aurora_cluster',
                             'Value': cluster_name
                         }
                     ]
