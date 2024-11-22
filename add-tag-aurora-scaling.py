@@ -1,3 +1,4 @@
+# Sample script only, please fully test it before move to production.
 import boto3
 import logging
 from datetime import datetime
